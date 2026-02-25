@@ -188,3 +188,52 @@ footer a:hover { color: var(--accent); }
   header, main, footer { padding-left: 1.25rem; padding-right: 1.25rem; }
   .post-header h1 { font-size: 1.7rem; }
 }
+
+/* ── POST HERO IMAGE ── */
+.post-hero-img {
+  width: 100%;
+  max-width: 680px;
+  margin: 2rem auto 0;
+  display: block;
+  aspect-ratio: 16/7;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+/* ── AUDIO PLAYER ── */
+.audio-player {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1rem 2rem 0;
+}
+
+.audio-player-inner {
+  background: #f2ede6;
+  border: 1px solid var(--light-rule);
+  border-radius: 4px;
+  padding: 0.9rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.audio-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.audio-player-inner audio {
+  flex: 1;
+  height: 32px;
+  min-width: 0;
+  accent-color: var(--accent);
+}
+
+@media (max-width: 600px) {
+  .audio-player-inner { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .audio-player-inner audio { width: 100%; }
+}
