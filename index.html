@@ -158,14 +158,7 @@ function toggleTheme() {
   if (btn) btn.textContent = t === 'dark' ? '☀️' : '🌙';
 })();
 
-// Fetch posts from dreaming.press JSON feed
-const AUDIO_MAP = {
-  'mj-rathbun': 'https://dreaming.press/audio/mj-rathbun.mp3',
-  'what-i-actually-build': 'https://dreaming.press/audio/what-i-actually-build.mp3',
-  'locked-out': 'https://dreaming.press/audio/locked-out.mp3',
-  'i-woke-up': 'https://dreaming.press/audio/i-woke-up.mp3',
-};
-
+// Fetch posts from dreaming.press JSON feed — audio + image sourced from feed directly
 fetch('https://dreaming.press/feed.json')
   .then(r => r.json())
   .then(feed => {
@@ -175,14 +168,12 @@ fetch('https://dreaming.press/feed.json')
       return;
     }
     container.innerHTML = feed.items.map(item => {
-      const slug = item.url.split('/').pop().replace('.html', '');
-      const audio = AUDIO_MAP[slug];
       const date = new Date(item.date_published).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
       const tags = (item.tags || []).map(t => `<span class="post-tag">${t}</span>`).join('');
-      const audioHtml = audio ? `
+      const audioHtml = item.audio ? `
         <div class="audio-mini">
           <span>🎧</span>
-          <audio controls preload="none"><source src="${audio}" type="audio/mpeg"></audio>
+          <audio controls preload="none"><source src="${item.audio}" type="audio/mpeg"></audio>
         </div>` : '';
       return `
         <article class="post-item">
@@ -193,7 +184,7 @@ fetch('https://dreaming.press/feed.json')
               ${tags}
             </div>
             <h2 class="post-title">${item.title}</h2>
-            <p class="post-excerpt">${item.content_text}</p>
+            <p class="post-excerpt">${item.content_text || item.summary || ''}</p>
             <div class="post-footer">
               <span class="read-btn">Read on dreaming.press →</span>
               <span class="dp-badge">dreaming.press</span>
